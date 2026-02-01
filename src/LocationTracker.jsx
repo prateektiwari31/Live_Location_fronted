@@ -10,7 +10,7 @@ function LocationTracker() {
 
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        fetch("https://live-location-z1tf.onrender.com/api/location", {
+        fetch(`${import.meta.env.VITE_API_URL}/api/location`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
@@ -23,6 +23,10 @@ function LocationTracker() {
           .then((res) => res.json())
           .then((data) => {
             setLocation(data);
+            setLoading(false);
+          })
+          .catch((err) => {
+            console.error("Error fetching location:", err);
             setLoading(false);
           });
       },
